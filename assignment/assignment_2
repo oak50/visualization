@@ -1,6 +1,123 @@
+# 1. import pandas & load dataset
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# import dataset
 df = pd.read_csv('assignment/data/college_completion.csv',low_memory=False)
+
+# 2. read the dataset
+df = pd.read_csv('assignment/data/college_completion.csv')
+print("Shape: \n", df.shape,'\n') 
+print(df.head(),'\n') # print first few rows of the data
+print(df.columns.tolist())
+
+data_columns = df.columns.tolist()
+column_count = len(data_columns)
+print("Column count: \n", column_count)
+
+# the dataset has 63 columns and 3798 rows. Many variables are included (listed in output). 
+
+# 3. cross tabulate the data & note variations between university types.
+
+print(pd.crosstab(df['control'],df['level']),'\n')
+print(pd.crosstab(df['control'],df['level'], normalize = 'all'),'\n')
+
+'''
+
+Private for-profit institutions have a 46.88% incidence rate of 2-year program stucture and a 53.12% incidence rate of 4-year program structure.
+Public institutions have a 59.43% incidence rate of 2-year program structure and a 40.57% incidence rate of 4-year program structure.
+Private not for-profit institutions have a 5.45% incidence rate of 2-year program structure and a 94.55% incidence rate of 4-year program structure.
+
+This likely reflects that many community colleges are public, whereas private not-for-profit schools tend not to be community colleges.
+Private for-profit schools are often fast-track degree programs, which reflects the high incidence rate of for-profit 2 year programs.
+
+'''
+
+# 4. generate histogram, kernel density plot, boxplot, and statistical description for the grad_100_value variable:
+
+plt.ion()
+
+
+# HISTOGRAM:
+import seaborn as sns
+'''
+sns.histplot(df['grad_100_value'])
+plt.savefig("grad_hist.png")
+plt.show()
+
+# KERNEL DENSITY PLOT
+sns.kdeplot(df['grad_100_value'])
+plt.savefig("grad_kdp.png")
+plt.show()
+
+# BOXPLOT
+sns.boxplot(df["grad_100_value"])
+plt.show()
+plt.savefig("grad_boxplot")
+
+
+# STATISTICAL DESCRIPTION
+print( df['grad_100_value'].describe() )
+
+
+# 5. create kernel density plot for grad_100_value variable for level and control
+
+sns.kdeplot(data=df,x='grad_100_value',hue="control")
+plt.show()
+plt.savefig("grad_kde_diffs")
+
+sns.kdeplot(data=df,x='grad_100_value',hue='level')
+plt.show()
+plt.savefig("grad_kde_level")
+
+print(df.loc[:,['control','grad_100_value']].groupby('control').describe())
+print(df.loc[:,['level','grad_100_value']].groupby('level').describe())
+
+# The kernel density plot for institution type (public, private non-profit, and private for-profit) shows a sharp peak at
+# ~15% graduation rate for public institutions with a right skew, whereas the graphs for both types of private insttituions are
+# more uniformly distributed with seemingly higher median values for graduation rate.
+
+# The kernel density plot for level shows a sharper peak and lower mean graduation rate for 2-year institutions compared
+# to 4-year institutions.abs
+
+# The KDE plots reflect the median graduation rate values shown in the statistical decription table. Public institutions
+# and 2 year institutions are shown to have 13.2% and 13.0% median graduation rates, respectively, which are the lowest 
+# median grd rate values in their respective cohorts.abs
+
+
+# 6. Create a new variable, df['levelXcontrol']=df['level']+', '+df['control']. that interacts level and control. 
+# Make a grouped kernel density plot. Which institutions appear to have the best graduation rates?
+
+df['level_control']=df['level']+', '+df['control']
+sns.kdeplot(data=df,x='grad_100_value',hue='level_control')
+plt.show()
+plt.savefig("level_control.png")
+
+print( df.loc[:,['level','control','grad_100_value']].groupby(['level','control']).describe() ) # describe data in the level_control plot
+'''
+# according to the descriptive analysis chart, 2-year private not-for-profit instituions have the highest median grad rate
+# at 44.4%. 4-year not-for-profit insttitutions have the second highest median grad rate at 41%.
+
+
+
+# 7. Make a kernel density plot of aid_value. Now group your graph by level and control. What explains the shape of 
+# the graph? Use groupby and .describe to make grouped calculations of statistical descriptions of aid_value by 
+# level and control.
+
+# regular kde plot for aid_value
+
+sns.kdeplot(df['aid_value'])
+plt.show()
+plt.savefig("aid_value_kde")
+
+# group by level and control
+df['level_control']=df['level']+', '+df['control']
+sns.kdeplot(data=df,x='aid_value',hue='level_control')
+plt.show()
+plt.savefig("level_control_aid_value.png")
+
+
+
+
 
