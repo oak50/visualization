@@ -95,7 +95,7 @@ plt.show()
 plt.savefig("level_control.png")
 
 print( df.loc[:,['level','control','grad_100_value']].groupby(['level','control']).describe() ) # describe data in the level_control plot
-'''
+
 # according to the descriptive analysis chart, 2-year private not-for-profit instituions have the highest median grad rate
 # at 44.4%. 4-year not-for-profit insttitutions have the second highest median grad rate at 41%.
 
@@ -111,11 +111,35 @@ sns.kdeplot(df['aid_value'])
 plt.show()
 plt.savefig("aid_value_kde")
 
-# group by level and control
-df['level_control']=df['level']+', '+df['control']
-sns.kdeplot(data=df,x='aid_value',hue='level_control')
+df['aid_value_arcsinh'] = np.arcsinh(df['aid_value'])
+sns.kdeplot(data=df,x='aid_value_arcsinh')
 plt.show()
 plt.savefig("level_control_aid_value.png")
+
+# group by level and control
+
+sns.kdeplot(data=df,x='aid_value',hue='control')
+plt.show()
+plt.savefig("kde_aid_control")
+
+sns.kdeplot(data=df,x='aid_value',hue='level')
+plt.show()
+plt.savefig("kde_aid_level")
+'''
+# make table comparing aid value statistics for different controls
+print( df.loc[:,['control','aid_value']].groupby('control').describe() )
+
+# make table comparing aid value statistics for different levels
+print( df.loc[:,['level','aid_value']].groupby('level').describe() )
+
+# Public and private for-profit universities have low median aid values compared to private NFP universities, and both of 
+# their graphs have a strong peak at around $4,500. This explains the large amount of universities with median aid amounts 
+# around this amount, as shown in the graph hich combines controls. Two year schools also give out less aid, on average,
+# than 4-year-schools, which contributes to the peak effect on the combined kde graph.abs
+
+
+
+
 
 
 
