@@ -176,6 +176,41 @@ plt.savefig("scatter_aidgrad_levelcontrol")
 
 
 
+# QUESTION 4
+
+# 1. Pick a dataset about something you are interested in. Download the data and data dictionary. If you really can't decide, 
+# you can always use this one: https://data.cms.gov/medicare-current-beneficiary-survey-mcbs/medicare-current-beneficiary-survey-data
+
+df = pd.read_csv('assignment/data/Medicare_Telehealth_Trends_Q1_2024.csv',low_memory=False)
+
+# 2. Does the data dictionary document how missings are handled? For categorical variables, does it describe the possible 
+# values and missing value codes? For the numeric variables, does it describe how missing values are handled? 
+# Summarize your opinion of the data dictionary.
+
+#       In the geography section (which identifies where a data point was collected), it's stated that: "If a beneficiary’s
+#       state of residence is unknown, the beneficiary is assigned to the “Missing Data” category. Data aggregated 
+#       at the National level are identified by "National'."
+
+
+# 3. Pick out a few interesting variables, and explain why you find them jointly interesting. Clean those variables, 
+# documenting your choices by commenting in the code or in a markdown chunk in a notebook.
+
+#       Variables: 
+#       1. Pct_Telehealth --> Indicates the Percentage of Medicare Users with a Telehealth Service.
+#       2. Bene_RUCA_Desc --> Indicates rural or urban status
+#       3. Bene_Sex_Desc --> Indicates Beneficiary Sex Description (male or female)
+
+# 4. For the variables you select, make a boxplot for each numeric variable and a bar graph for each categorical variable. 
+# Do you see any outliers?
+
+# 5. Create a histogram or kernel density plot, and explain what you see. Do the results require any transformations 
+# to rescale them?
+
+#6. Create a scatter plot, and describe the relationship you see.
+
+#7. Create a table (cross tabulation, variance-covariance, or a .describe() five-number summary), and explain what you see.
+
+
 
 
 
