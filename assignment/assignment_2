@@ -41,7 +41,7 @@ plt.ion()
 
 # HISTOGRAM:
 import seaborn as sns
-'''
+
 sns.histplot(df['grad_100_value'])
 plt.savefig("grad_hist.png")
 plt.show()
@@ -125,7 +125,7 @@ plt.savefig("kde_aid_control")
 sns.kdeplot(data=df,x='aid_value',hue='level')
 plt.show()
 plt.savefig("kde_aid_level")
-'''
+
 # make table comparing aid value statistics for different controls
 print( df.loc[:,['control','aid_value']].groupby('control').describe() )
 
@@ -136,6 +136,48 @@ print( df.loc[:,['level','aid_value']].groupby('level').describe() )
 # their graphs have a strong peak at around $4,500. This explains the large amount of universities with median aid amounts 
 # around this amount, as shown in the graph hich combines controls. Two year schools also give out less aid, on average,
 # than 4-year-schools, which contributes to the peak effect on the combined kde graph.abs
+
+
+# 8. Make a scatterplot of grad_100_value by aid_value. Describe what you see. Now make the same plot, grouping by level 
+# and then control. Describe what you see. For which kinds of institutions does aid seem to increase graduation rates?
+
+# make scatter for grad rate and aid value
+sns.scatterplot(data=df, x="aid_value", y="grad_100_value")
+plt.show()
+plt.savefig("grad_aid_scatter.png")
+
+# observations -- one section of the data appears to reflect a positive association between aid value and graduation rate.abs
+# However, there is a section of aid values (on the lower side of the aid value sprectrum) for which aid value appears to
+# have no correlation with graduation rate.abs
+
+# make the same plot, grouping by level and then control
+
+# Group by level:
+sns.scatterplot(data=df,x='aid_value',y="grad_100_value",hue='level')
+plt.show()
+plt.savefig("scatter_aidgrad_level.png")
+
+# Group by control:
+sns.scatterplot(data=df,x='aid_value',y="grad_100_value",hue='control')
+plt.show()
+plt.savefig("scatter_aidgrad_control.png")
+
+# make scatter incorporating level_control variable
+sns.scatterplot(data=df,x='aid_value',y='grad_100_value',hue='level_control')
+plt.show()
+plt.savefig("scatter_aidgrad_levelcontrol")
+
+# Aid seems to increase graduation rates primarily for 4-year private, not for profit universities. This makes sense, 
+# as 4 year private universities tend to have high tuition rates which carry over four years. Therefore, it is reasonable
+# financial aid would have a higher marinal impact on graduation rates for these schools, when compared to 2 year schools 
+# and private schools. However, it's interesting that 4 year private for-profit institutions seem to exhibit less positive association 
+# between financial and grad rate.
+
+
+
+
+
+
 
 
 
